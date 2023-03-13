@@ -1,0 +1,36 @@
+version: '3.4'
+
+networks:
+
+  matelso-test:
+    driver: bridge
+
+services:
+
+  testaufgabe_db:
+    image: postgres:latest
+    container_name: testaufgabe_db
+    environment:
+      - POSTGRES_USER=tester
+      - POSTGRES_PASSWORD=testpw
+      - POSTGRES_DB=TestDb
+    ports:
+      - "5432:5432"
+    restart: always
+    networks:
+      - matelso-test
+
+  testaufgabe_api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: contactmanagerwebapi:latest
+    container_name: testaufgabe_api
+    ports:
+      - "80:80"
+    depends_on:
+      - "testaufgabe_db"
+    environment:
+      - ASPNETCORE_URLS=http://+:80
+    networks:
+      - matelso-test
