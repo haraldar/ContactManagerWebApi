@@ -3,7 +3,9 @@
 ## Architecture
 
 WebAPI: ASP.NET Core 7.0
+
 Database: PostgreSQL with Entity FW Core
+
 Containerization: Docker with Docker Compose
 
 
